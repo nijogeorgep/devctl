@@ -17,11 +17,7 @@ var (
 )
 
 func main() {
-	/*if len(os.Args) > 1 && os.Args[1] == "version" {
-		fmt.Printf("Version: %s\nGit SHA: %s\nBuilt at: %s\n", version, gitSha, buildDate)
-		return
-	}*/
-
+	// Set up the root command
 	var rootCmd = &cobra.Command{Use: "devctl"}
 
 	rootCmd.AddCommand(&cobra.Command{
