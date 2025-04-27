@@ -1,8 +1,9 @@
-FROM golang:1.21-alpine as builder
-WORKDIR /app
-COPY . .
-RUN go build -o devctl ./cmd/devctl
+FROM alpine:latest
 
-FROM alpine
-COPY --from=builder /app/devctl /usr/local/bin/devctl
-ENTRYPOINT ["devctl"]
+WORKDIR /app
+
+COPY ./bin/devctl /app/devctl
+
+RUN chmod +x /app/devctl
+
+ENTRYPOINT ["./devctl"]
