@@ -44,8 +44,8 @@ dockers:
     dockerfile: Dockerfile
     goos: linux
     goarch:
-      - amd64
-      - arm64
+      - "amd64"
+      - "arm64"
     build_flag_templates:
       - "--platform=linux/{{ .Arch }}"
     use: "buildx"
