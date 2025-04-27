@@ -42,11 +42,11 @@ dockers:
       - "ghcr.io/nijogeorgep/devctl:{{ .Version }}"
       - "ghcr.io/nijogeorgep/devctl:latest"
     dockerfile: Dockerfile
-
     goos: linux
     goarch: amd64
     build_flag_templates:
-      - "--platform=linux/{{ .Arch }}"
+      - "--platform=linux/amd64"
+      - "--platform=linux/arm64"
     use: "buildx"
 
 brews:
