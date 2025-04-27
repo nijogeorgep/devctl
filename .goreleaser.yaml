@@ -18,8 +18,8 @@ builds:
 
 dockers:
   - image_templates:
-      - "ghcr.io/nijogeorgep/devshell:{{ .Version }}"
-      - "ghcr.io/nijogeorgep/devshell:latest"
+      - "ghcr.io/nijogeorgep/devctl:{{ .Version }}"
+      - "ghcr.io/nijogeorgep/devctl:latest"
     dockerfile: Dockerfile
     goos: linux
     goarch:
@@ -28,6 +28,19 @@ dockers:
     build_flag_templates:
       - "--platform=linux/{{ .Arch }}"
     use: buildx
+
+brews:
+  - name: devctl
+    tap:
+      owner: nijogeorgep
+      name: homebrew-devctl
+    folder: Formula
+    description: "Developer and SRE utility to reduce toil and automate common tasks."
+    homepage: "https://github.com/nijogeorgep/devctl"
+    install: |
+      bin.install "devctl"
+    test: |
+      system "#{bin}/devctl --help"
 
 archives:
   - format: tar.gz
