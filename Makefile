@@ -1,13 +1,13 @@
 APP_NAME := devctl
 CMD_DIR := ./cmd/devctl
 BIN := ./bin/$(APP_NAME)
-VERSION := 0.1.0
+VERSION := $(shell git describe --tags --always --dirty)
 GIT_SHA := $(shell git rev-parse --short HEAD)
 BUILD_DATE := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 LDFLAGS := -ldflags "-X 'main.version=$(VERSION)' -X 'main.gitSha=$(GIT_SHA)' -X 'main.buildDate=$(BUILD_DATE)'"
 
-.PHONY: all build run install test clean tidy
+.PHONY: all build run install test clean tidy docker release
 
 all: build
 
@@ -40,3 +40,13 @@ tidy:
 docker:
 	@echo "🐳 Building Docker image..."
 	@docker build -t $(APP_NAME):$(VERSION) .
+
+release:
+	@if [ -z "$(TYPE)" ]; then \
+		echo "❗ Please specify TYPE=patch, TYPE=minor, or TYPE=major"; \
+		exit 1; \
+	fi
+	@echo "🚀 Bumping $(TYPE) version..."
+	@./scripts/bump_version.sh $(TYPE)
+	@echo "🔧 Building after release bump..."
+	@make build
