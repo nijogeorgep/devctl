@@ -48,6 +48,13 @@ dockers:
       - "--platform=linux/amd64"
       - "--platform=linux/arm64"
     use: "buildx"
+    skip_push: false
+
+docker_manifests:
+  - name_template: "nijogeorgep/devctl:{{ .Version }}"
+    image_templates:
+      - "nijogeorgep/devctl:{{ .Version }}-amd64"
+      - "nijogeorgep/devctl:{{ .Version }}-arm64"
 
 brews:
   - name: devctl
