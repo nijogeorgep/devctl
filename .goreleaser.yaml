@@ -1,4 +1,9 @@
+---
 project_name: devctl
+
+before:
+  hooks:
+    - go mod tidy
 
 builds:
   - id: devctl
@@ -16,32 +21,6 @@ builds:
     ldflags:
       - "-X main.version={{.Version}} -X main.gitSha={{.Commit}} -X main.buildDate={{.Date}}"
 
-dockers:
-  - image_templates:
-      - "ghcr.io/nijogeorgep/devctl:{{ .Version }}"
-      - "ghcr.io/nijogeorgep/devctl:latest"
-    dockerfile: Dockerfile
-    goos: linux
-    goarch:
-      - amd64
-      - arm64
-    build_flag_templates:
-      - "--platform=linux/{{ .Arch }}"
-    use: buildx
-
-brews:
-  - name: devctl
-    tap:
-      owner: nijogeorgep
-      name: homebrew-devctl
-    folder: Formula
-    description: "Developer and SRE utility to reduce toil and automate common tasks."
-    homepage: "https://github.com/nijogeorgep/devctl"
-    install: |
-      bin.install "devctl"
-    test: |
-      system "#{bin}/devctl --help"
-
 archives:
   - format: tar.gz
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
@@ -57,3 +36,28 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+
+dockers:
+  - image_templates:
+      - "ghcr.io/nijogeorgep/devctl:{{ .Version }}"
+      - "ghcr.io/nijogeorgep/devctl:latest"
+    dockerfile: Dockerfile
+    goos: linux
+    goarch:
+      - amd64
+      - arm64
+    build_flag_templates: "--platform=linux/{{ .Arch }}"
+    use: buildx
+
+brews:
+  - name: devctl
+    tap:
+      owner: nijogeorgep
+      name: homebrew-devctl
+    folder: Formula
+    description: "Developer and SRE utility to reduce toil and automate common tasks."
+    homepage: "https://github.com/nijogeorgep/devctl"
+    install: |
+      bin.install "devctl"
+    test: |
+      system "#{bin}/devctl --help"
