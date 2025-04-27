@@ -46,8 +46,9 @@ dockers:
     goarch:
       - amd64
       - arm64
-    build_flag_templates: "--platform=linux/{{ .Arch }}"
-    use: buildx
+    build_flag_templates:
+      - "--platform=linux/{{ .Arch }}"
+    use: "buildx"
 
 brews:
   - name: devctl
