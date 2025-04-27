@@ -32,11 +32,9 @@ jobs:
           install: true
 
       - name: Set up Goreleaser
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@v5
         with:
-          distribution: goreleaser
-          # 'latest', 'nightly', or a semver
-          version: "latest"
+          version: latest
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GHA_TOKEN }}
