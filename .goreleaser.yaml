@@ -39,22 +39,27 @@ changelog:
 
 dockers:
   - image_templates:
-      - "ghcr.io/nijogeorgep/devctl:{{ .Version }}"
+      - "ghcr.io/nijogeorgep/devctl:{{ .Version }}-amd64"
       - "ghcr.io/nijogeorgep/devctl:latest"
-    dockerfile: Dockerfile
-    goos: linux
+    use: buildx
     goarch: amd64
+    dockerfile: Dockerfile
     build_flag_templates:
       - "--platform=linux/amd64"
-      - "--platform=linux/arm64"
-    use: "buildx"
-    skip_push: false
+  - image_templates:
+      - "ghcr.io/nijogeorgep/devctl:{{ .Version }}-arm64v8"
+      - "ghcr.io/nijogeorgep/devctl:latest"
+    use: buildx
+    goarch: arm64
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/arm64/v8"
 
 docker_manifests:
   - name_template: "nijogeorgep/devctl:{{ .Version }}"
     image_templates:
       - "nijogeorgep/devctl:{{ .Version }}-amd64"
-      - "nijogeorgep/devctl:{{ .Version }}-arm64"
+      - "nijogeorgep/devctl:{{ .Version }}-arm64v8"
 
 brews:
   - name: devctl
