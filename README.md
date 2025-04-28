@@ -1,4 +1,4 @@
-# devctl
+# 🏗️ devctl
 
 `devctl` is a Go-based CLI utility designed to streamline developer and SRE workflows by automating common tasks across Git, Kubernetes, networking, and beyond. It supports a plugin-based architecture, enabling seamless extensibility for custom use cases.
 
